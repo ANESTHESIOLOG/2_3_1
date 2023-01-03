@@ -4,14 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import web.dao.CarDAO;
+import org.springframework.web.bind.annotation.RequestParam;
+import web.dao.CarDao;
 
 @Controller
 @RequestMapping("/cars")
 public class CarsController {
-//    Задание:
+//Задание:
 //1. Создайте еще один контроллер, замаппленный на /cars.
 //2. Создайте модель Car с тремя произвольными полями.
 //3. Создайте список из 5 машин.
@@ -21,25 +21,18 @@ public class CarsController {
 //при /cars?count=3 - из 3, и тд. При count ≥ 5 выводить весь список машин.
 
 
-    private final CarDAO carDao;
+    private final CarDao carDao;
 
     @Autowired
-    public CarsController(CarDAO carDao) {
+    public CarsController(CarDao carDao) {
         this.carDao = carDao;
     }
 
 
     @GetMapping()
-    public String index(Model model) {
-        //Получим всех машин из дао и передадим на отображение в представлении
-        model.addAttribute("car", carDao.index());
-        return "index2";
+    public String index(@RequestParam(value = "count", defaultValue = "5") int count, Model model) {
+        model.addAttribute("car", carDao.carRemoval(count));
+        return "removCarCount";
     }
 
-    @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
-        //Получим одного человека по ИД из ДАО и передадим его на отображение в представлении
-        model.addAttribute("car", carDao.show(id));
-        return "show";
-    }
 }
