@@ -8,7 +8,7 @@
     <artifactId>spring-mvc</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <packaging>war</packaging>  
+    <packaging>war</packaging>
 
     <properties>
         <spring.version>5.3.14</spring.version>
@@ -21,7 +21,6 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
-
         <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -29,9 +28,16 @@
             <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
-
-
-
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.6.3.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.25</version>
+        </dependency>
         <dependency>
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf-spring5</artifactId>
