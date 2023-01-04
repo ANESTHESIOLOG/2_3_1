@@ -1,25 +1,29 @@
 package web.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import web.dao.CarDao;
-import web.dao.CarDaoImpl;
 import web.model.Car;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CarServiceImpl implements CarService {
 
-    private CarDao carDao;
+    private List<Car> car;
 
-    @Autowired
-    public CarServiceImpl(CarDao carDao) {
-        this.carDao = carDao;
+    {
+        car = new ArrayList<>();
+
+        car.add(new Car(1, "Lada", "Vesta"));
+        car.add(new Car(2, "Mersedece", "GLS"));
+        car.add(new Car(3, "BMW", "5-series"));
+        car.add(new Car(4, "KIA", "Rio"));
+        car.add(new Car(5, "Cherry", "Tiggo"));
     }
 
     @Override
-    public List<Car> carRemoval(int count) {
-        return carDao.carRemoval(count);
+    public List<Car> returningCarListCount(int count) {
+        return car.stream().limit(count).collect(Collectors.toList());
     }
 }
