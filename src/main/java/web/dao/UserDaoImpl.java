@@ -22,14 +22,17 @@ public class UserDaoImpl implements UserDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-//    @Autowired
-//    public UserDaoImpl(EntityManager entityManager) {
-//        this.entityManager = entityManager;
-//    }
+
 
     public List<User> getAllUsers() {
         return entityManager.createQuery("from User", User.class).getResultList();
     }
+
+    @Override
+    public void save(User user) {
+        entityManager.persist(user);
+    }
+
 
 //    public User show(int id) {
 //        return users.stream().filter(user -> user.getId() == id).findAny().orElse(null);
@@ -41,11 +44,6 @@ public class UserDaoImpl implements UserDao {
 //        userToBeUpdated.setFirstName(updateUser.getFirstName());
 //        userToBeUpdated.setLastName(updateUser.getLastName());
 //        userToBeUpdated.setEmail(updateUser.getEmail());
-    }
-
-    @Override
-    public void save(User user) {
-        entityManager.persist(user);
     }
 
     public void delete(int id) {

@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import web.dao.UserDao;
 import web.model.User;
+import web.service.UserService;
 
 import javax.validation.Valid;
 
@@ -14,17 +15,18 @@ import javax.validation.Valid;
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserDao userDao;
+    private final UserService userService;
 
     @Autowired
-    public UserController(UserDao userDao) {
-        this.userDao = userDao;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping()
     public String getAllUsers(Model model) {
-        model.addAttribute("users", userDao.getAllUsers());
-        return "getAllUsers";
+//        //model.addAttribute("users", userService.getAllUsers());
+//        return "getAllUsers";
+        return null;
     }
 
     @GetMapping("/{id}")
@@ -41,12 +43,8 @@ public class UserController {
     }
 
     @PostMapping
-    public String createUser(@ModelAttribute("user") @Valid User user,
-                             BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "/new";
-        }
-        userDao.save(user);
+    public String createUser(@ModelAttribute("user") User user) {
+        userService.save(user);
         return "redirect:/user";
     }
 
@@ -58,10 +56,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, @PathVariable("id") int id) {
-//        if (bindingResult.hasErrors()) {
-//            return "editeUser";
-//        }
+    public String update(@ModelAttribute("user") User user, @PathVariable("id") int id) {
 //        userDao.update(id, user);
 //        return "redirect:/user";
         return null;
