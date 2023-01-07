@@ -3,7 +3,6 @@ package web.model;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
@@ -12,19 +11,23 @@ import java.util.Objects;
 public class User {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
-    @NotNull
+    @NotEmpty(message = "The field cannot be empty")
+    @Size(min = 2, max = 15, message = "Name must be between 2 and 15 characters")
     @Column(name = "name", nullable = false)
     private String firstName;
 
-    @NotNull
+    @NotEmpty(message = "The field cannot be empty")
+    @Size(min = 2, max = 15, message = "Last Name must be between 2 and 15 characters")
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
 
-    @NotNull
+    @NotEmpty(message = "The field cannot be empty")
+    @Email(message = "enter email address")
     @Column(name = "email", nullable = false)
     private String email;
 
@@ -37,11 +40,11 @@ public class User {
         this.email = email;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

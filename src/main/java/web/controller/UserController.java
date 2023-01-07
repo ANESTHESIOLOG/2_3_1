@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import web.dao.UserDao;
 import web.model.User;
 import web.service.UserService;
 
@@ -24,48 +23,49 @@ public class UserController {
 
     @GetMapping()
     public String getAllUsers(Model model) {
-//        //model.addAttribute("users", userService.getAllUsers());
-//        return "getAllUsers";
-        return null;
+        model.addAttribute("users", userService.getAllUsers());
+        return "getAllUsers";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-//        model.addAttribute("user", userDao.show(id));
-//        return "show";
-    return null;
+        model.addAttribute("user", userService.show(id));
+        return "show";
     }
 
     @GetMapping("/new")
     public String newUser(Model model) {
         model.addAttribute("user", new User());
-        return "/new";
+        return "new";
     }
 
     @PostMapping
-    public String createUser(@ModelAttribute("user") User user) {
+    public String create(@ModelAttribute("user") @Valid User user,
+                         BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return "new";
         userService.save(user);
         return "redirect:/user";
     }
 
     @GetMapping("/{id}/edite")
     public String editeUser(Model model, @PathVariable("id") int id) {
-//        model.addAttribute("user", userDao.show(id));
-//        return "editeUser";
-        return null;
+        model.addAttribute("user", userService.show(id));
+        return "editeUser";
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") User user, @PathVariable("id") int id) {
-//        userDao.update(id, user);
-//        return "redirect:/user";
-        return null;
+    public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
+                         @PathVariable("id") int id) {
+        if (bindingResult.hasErrors())
+            return "editeUser";
+        userService.update(id, user);
+        return "redirect:/user";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-//        userDao.delete(id);
-//        return "redirect:/user";
-        return null;
+        userService.delete(id);
+        return "redirect:/user";
     }
 }
