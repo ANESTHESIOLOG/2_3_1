@@ -1,6 +1,9 @@
 package web.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
@@ -9,15 +12,21 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
-    @Column(name = "name")
+    @NotEmpty(message = "Name not found")
+    @Size(min = 2, max = 10, message = "Name smallbig size")
+    @Column(name = "name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @NotEmpty(message = "Last Name not found")
+    @Size(min = 2, max = 10, message = "Last Name should be size")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "email")
+    @NotEmpty(message = "Email should not be empty")
+    @Email(message = "Email should be valid")
+    @Column(name = "email", nullable = false)
     private String email;
 
     public User() {
@@ -29,11 +38,11 @@ public class User {
         this.email = email;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -75,7 +84,7 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id.equals(user.id) && firstName.equals(user.firstName) && lastName.equals(user.lastName) && email.equals(user.email);
+        return id == user.id && firstName.equals(user.firstName) && lastName.equals(user.lastName) && email.equals(user.email);
     }
 
     @Override

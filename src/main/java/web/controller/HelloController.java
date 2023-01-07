@@ -15,10 +15,9 @@ public class HelloController {
 	public String printWelcome(ModelMap model) {
 		List<String> messages = new ArrayList<>();
 		messages.add("Привет!");
-		messages.add("Это перваая попытка создать маленькое приложение");
+		messages.add("Это маленькое CRUD приложение");
 		messages.add("Версия 1.0");
 		model.addAttribute("messages", messages);
 		return "index";
 	}
-
 }
