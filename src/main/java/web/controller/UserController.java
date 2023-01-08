@@ -36,15 +36,15 @@ public class UserController {
     @GetMapping("/new")
     public String newUser(Model model) {
         model.addAttribute("user", new User());
-        return "new";
+        return "newUser";
     }
 
     @PostMapping
-    public String create(@ModelAttribute("user") @Valid User user,
+    public String createUser(@ModelAttribute("user") @Valid User user,
                          BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            return "new";
-        userService.save(user);
+            return "newUser";
+        userService.saveUser(user);
         return "redirect:/user";
     }
 
@@ -59,13 +59,13 @@ public class UserController {
                          @PathVariable("id") int id) {
         if (bindingResult.hasErrors())
             return "editeUser";
-        userService.update(id, user);
+        userService.updateUser(id, user);
         return "redirect:/user";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        userService.delete(id);
+        userService.deleteUser(id);
         return "redirect:/user";
     }
 }
