@@ -8,7 +8,7 @@ public interface UserService {
 
     public List<User> getAllUsers();
 
-    public User show(int id);
+    public User getUser(int id);
 
     public void save(User user);
 
